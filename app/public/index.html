@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <title>Eat-da-Burger</title>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="jumbotron">
+                    <img src"/" alt="burger-picture">
+                    <h1>Eat-da-Burger</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div id="burger" class="col-md-6">
+                <h2>Burgers</h2>
+                <!--add burgers from the database-->
+
+            </div>
+            <div class="col-md-6">
+                <label for="BurgerName">Burger Name</label>
+                <input id='burgername' class="form-control" type="text" placeholder="Burger Name">
+                <br>
+                <button class="addBurger btn btn-success">Submit</button>
+                <br>
+                <p>Please enter your favorite burger that you would like to eat and Submit!</p>
+            </div>
+        </div>
+    </div>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+
+    <script>
+
+        //javaScript to get the data from database
+        //AJAX
+        $(document).ready(function () {
+            axios.get("api/all").then(response =>
+                response.data.forEach(burger => $('#burger')
+                    .append(`<p>${burger.name}</p>`))
+
+            );
+
+            $(".btn-success").click(function () {
+                axios.post("api/new", {
+                    name: $("#burgername").val().trim()
+
+                }).then(response => $("#burger").append(`<p>${response.data.name}</p>`));
+
+            });
+
+        });
+
+    </script>
+
+</body>
+
+</html>
